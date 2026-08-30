@@ -348,7 +348,38 @@ R1(config)# username admin privilege 15 secret AdminPass123
 R1(config)# line vty 0 4
 R1(config-line)# transport input ssh
 R1(config-line)# login local
-16. DHCPv4 and DHCPv6Dynamic Host Configuration Protocol automates network parameter distribution (IP, Subnet Mask, Gateway, DNS).DHCPv4 DORA ProcessDiscover: Client sends a broadcast request to locate a server.Offer: DHCP Server offers configuration parameters.Request: Client accepts and requests the offered IP parameter set.Acknowledge (ACK): Server confirms lease allocation.DHCPv6 VariationsSLAAC (Stateless Address Autoconfiguration): Routers supply network prefixes via Router Advertisements (RA); hosts self-generate interface IDs.Stateless DHCPv6: SLAAC provides IP prefix/gateway; DHCPv6 provides supplemental parameters (DNS list).Stateful DHCPv6: DHCPv6 handles IP address distribution directly (similar to DHCPv4).17. Access Control Lists (ACL)ACLs are sequential rule tables used by routers to permit or deny network traffic based on addresses, protocols, or ports.ACL CategoriesTypeRangeEvaluation ScopeIdeal PlacementStandard ACL1–99 & 1300–1999Inspects Source IP Address onlyClosest to DestinationExtended ACL100–199 & 2000–2699Source/Dest IP, Protocol, Port NumbersClosest to SourceImplementation CommandsPlaintext! Standard ACL Example
+
+## 16. DHCPv4 and DHCPv6
+
+Dynamic Host Configuration Protocol automates network parameter distribution (IP, Subnet Mask, Gateway, DNS).
+
+### DHCPv4 DORA Process
+1. **Discover:** Client sends a broadcast request to locate a server.
+2. **Offer:** DHCP Server offers configuration parameters.
+3. **Request:** Client accepts and requests the offered IP parameter set.
+4. **Acknowledge (ACK):** Server confirms lease allocation.
+
+### DHCPv6 Variations
+* **SLAAC (Stateless Address Autoconfiguration):** Routers supply network prefixes via Router Advertisements (RA); hosts self-generate interface IDs.
+* **Stateless DHCPv6:** SLAAC provides IP prefix/gateway; DHCPv6 provides supplemental parameters (DNS list).
+* **Stateful DHCPv6:** DHCPv6 handles IP address distribution directly (similar to DHCPv4).
+
+---
+
+## 17. Access Control Lists (ACL)
+
+ACLs are sequential rule tables used by routers to permit or deny network traffic based on addresses, protocols, or ports.
+
+### ACL Categories
+
+| Type | Range | Evaluation Scope | Ideal Placement |
+| :--- | :--- | :--- | :--- |
+| **Standard ACL** | 1–99 & 1300–1999 | Inspects Source IP Address only | Closest to Destination |
+| **Extended ACL** | 100–199 & 2000–2699 | Source/Dest IP, Protocol, Port Numbers | Closest to Source |
+
+### Implementation Commands
+```text
+! Standard ACL Example
 Router(config)# access-list 10 permit 192.168.1.0 0.0.0.255
 Router(config)# interface g0/0/0
 Router(config-if)# ip access-group 10 in
@@ -358,7 +389,101 @@ Router(config)# ip access-list extended BLOCK_HTTP
 Router(config-ext-nacl)# deny tcp 192.168.1.0 0.0.0.255 host 10.0.0.5 eq 80
 Router(config-ext-nacl)# permit ip any any
 
-18. Network Address Translation (NAT)NAT maps private, non-routable IP addresses to public IPs, helping conserve IPv4 space and securing internal topologies.Primary NAT TypesStatic NAT: 1-to-1 permanent mapping between an internal private IP and an external public IP.Dynamic NAT: Dynamic many-to-many allocation from an assigned pool of public IPs.PAT (Port Address Translation / NAT Overload): Maps multiple internal private IPs to a single public IP using unique source port numbers.19. Building the MAC Address TableSwitches maintain a CAM (Content Addressable Memory) Table or MAC Address Table to map physical switch ports to connected MAC addresses.Learning and Forwarding LogicFrame Arrival: Inspects incoming Frame Source MAC Address:If not listed, the switch maps the Source MAC to the receiving Port with a standard 300-second aging timer.Forwarding Lookup: Inspects Frame Destination MAC Address:Unicast Known: Forwards directly out the associated port.Unicast Unknown / Broadcast / Multicast: Floods the frame out all active switch interfaces except the ingress interface.20. VLAN Trunking Protocols (DTP & VTP)Dynamic Trunking Protocol (DTP)Cisco proprietary point-to-point protocol that automatically negotiates dynamic trunk links between switches.Modes: Access, Trunk, Dynamic Auto (listens, defaults to access), Dynamic Desirable (actively negotiates trunk).VLAN Trunking Protocol (VTP)Centralizes VLAN database management across connected Cisco switches.VTP Modes:Server: Creates, edits, deletes, and advertises VLAN configurations.Client: Receives and applies VLAN updates from servers; cannot modify VLANs locally.Transparent: Does not synchronize its local database with advertisements, but forwards updates to downstream switches.21. VLAN Hopping Attacks & Voice VLANsVLAN Hopping Attack TypesSwitch Spoofing: An attacker auto-negotiates a trunk link with a switch port set to Dynamic Auto or Dynamic Desirable using rogue DTP frames.Mitigation: Explicitly set user ports to access mode (switchport mode access) and disable DTP (switchport nonegotiate).Double Tagging: An attacker crafts a frame with two 802.1Q tags matching the native VLAN to bypass switch tagging restrictions.Mitigation: Change the default native VLAN (VLAN 1) to an unused VLAN ID across all trunk interfaces.Voice VLAN ConfigurationSeparates real-time IP phone media traffic onto an isolated high-priority VLAN.PlaintextSwitch(config)# vlan 10
+## 16. DHCPv4 and DHCPv6
+
+Dynamic Host Configuration Protocol automates network parameter distribution (IP, Subnet Mask, Gateway, DNS).
+
+### DHCPv4 DORA Process
+1. **Discover:** Client sends a broadcast request to locate a server.
+2. **Offer:** DHCP Server offers configuration parameters.
+3. **Request:** Client accepts and requests the offered IP parameter set.
+4. **Acknowledge (ACK):** Server confirms lease allocation.
+
+### DHCPv6 Variations
+* **SLAAC (Stateless Address Autoconfiguration):** Routers supply network prefixes via Router Advertisements (RA); hosts self-generate interface IDs.
+* **Stateless DHCPv6:** SLAAC provides IP prefix/gateway; DHCPv6 provides supplemental parameters (DNS list).
+* **Stateful DHCPv6:** DHCPv6 handles IP address distribution directly (similar to DHCPv4).
+
+---
+
+## 17. Access Control Lists (ACL)
+
+ACLs are sequential rule tables used by routers to permit or deny network traffic based on addresses, protocols, or ports.
+
+### ACL Categories
+
+| Type | Range | Evaluation Scope | Ideal Placement |
+| :--- | :--- | :--- | :--- |
+| **Standard ACL** | 1–99 & 1300–1999 | Inspects Source IP Address only | Closest to Destination |
+| **Extended ACL** | 100–199 & 2000–2699 | Source/Dest IP, Protocol, Port Numbers | Closest to Source |
+
+### Implementation Commands
+```text
+! Standard ACL Example
+Router(config)# access-list 10 permit 192.168.1.0 0.0.0.255
+Router(config)# interface g0/0/0
+Router(config-if)# ip access-group 10 in
+
+! Extended ACL Example
+Router(config)# ip access-list extended BLOCK_HTTP
+Router(config-ext-nacl)# deny tcp 192.168.1.0 0.0.0.255 host 10.0.0.5 eq 80
+Router(config-ext-nacl)# permit ip any any
+
+18. Network Address Translation (NAT)
+NAT maps private, non-routable IP addresses to public IPs, helping conserve IPv4 space and securing internal topologies.
+
+Primary NAT Types
+Static NAT: 1-to-1 permanent mapping between an internal private IP and an external public IP.
+
+Dynamic NAT: Dynamic many-to-many allocation from an assigned pool of public IPs.
+
+PAT (Port Address Translation / NAT Overload): Maps multiple internal private IPs to a single public IP using unique source port numbers.
+
+19. Building the MAC Address Table
+Switches maintain a CAM (Content Addressable Memory) Table or MAC Address Table to map physical switch ports to connected MAC addresses.
+
+Learning and Forwarding Logic
+Frame Arrival: Inspects incoming Frame Source MAC Address:
+
+If not listed, the switch maps the Source MAC to the receiving Port with a standard 300-second aging timer.
+
+Forwarding Lookup: Inspects Frame Destination MAC Address:
+
+Unicast Known: Forwards directly out the associated port.
+
+Unicast Unknown / Broadcast / Multicast: Floods the frame out all active switch interfaces except the ingress interface.
+
+20. VLAN Trunking Protocols (DTP & VTP)
+Dynamic Trunking Protocol (DTP)
+Cisco proprietary point-to-point protocol that automatically negotiates dynamic trunk links between switches.
+
+Modes: Access, Trunk, Dynamic Auto (listens, defaults to access), Dynamic Desirable (actively negotiates trunk).
+
+VLAN Trunking Protocol (VTP)
+Centralizes VLAN database management across connected Cisco switches.
+
+VTP Modes:
+
+Server: Creates, edits, deletes, and advertises VLAN configurations.
+
+Client: Receives and applies VLAN updates from servers; cannot modify VLANs locally.
+
+Transparent: Does not synchronize its local database with advertisements, but forwards updates to downstream switches.
+
+21. VLAN Hopping Attacks & Voice VLANs
+VLAN Hopping Attack Types
+Switch Spoofing: An attacker auto-negotiates a trunk link with a switch port set to Dynamic Auto or Dynamic Desirable using rogue DTP frames.
+
+Mitigation: Explicitly set user ports to access mode (switchport mode access) and disable DTP (switchport nonegotiate).
+
+Double Tagging: An attacker crafts a frame with two 802.1Q tags matching the native VLAN to bypass switch tagging restrictions.
+
+Mitigation: Change the default native VLAN (VLAN 1) to an unused VLAN ID across all trunk interfaces.
+
+Voice VLAN Configuration
+Separates real-time IP phone media traffic onto an isolated high-priority VLAN.
+
+Switch(config)# vlan 10
 Switch(config-vlan)# name DATA_VLAN
 Switch(config)# vlan 20
 Switch(config-vlan)# name VOICE_VLAN
@@ -366,8 +491,67 @@ Switch(config)# interface FastEthernet0/1
 Switch(config-if)# switchport mode access
 Switch(config-if)# switchport access vlan 10
 Switch(config-if)# switchport voice vlan 20
-22. Spanning Tree Protocol (STP)IEEE 802.1D Spanning Tree Protocol eliminates Layer 2 switching loops in redundant topologies by blocking redundant paths.STP Port Roles and StatesBridge Protocol Data Units (BPDUs): Control frames exchanged to elect the Root Bridge (lowest Bridge ID = Priority + MAC Address).Port Roles: Root Port (RP), Designated Port (DP), Alternate/Blocked Port (AP).Port States: Blocking $\rightarrow$ Listening $\rightarrow$ Learning $\rightarrow$ Forwarding.PortFast EnhancementConfigured on edge access ports to bypass listening/learning states and immediately transition ports to forwarding, preventing DHCP timeouts on connected hosts.23. AAA Server (Authentication, Authorization, Accounting)AAA provides a centralized framework for securing network access control across infrastructure devices:[ User/Admin ] <---> [ Network Access Device (NAD) ] <---> [ AAA Server (ISE/RADIUS) ]
-Authentication: Verifies user identity credentials ("Who are you?").Authorization: Defines permitted commands and execution privileges ("What are you allowed to do?").Accounting: Logs user sessions, commands, and activity duration ("What did you do and when?").Protocols: TACACS+ (Cisco proprietary, encrypts full packet payload, TCP port 49) vs. RADIUS (Open standard, encrypts password only, UDP ports 1812/1813).24. IEEE 802.1X (Dot1x) Port-Based AuthenticationIEEE 802.1X is a network access control protocol that prevents unauthorized devices from accessing a LAN until authentication is completed.Key RolesSupplicant: The client endpoint requesting access (e.g., a PC running 802.1X software).Authenticator: The network device (Switch/WLC) controlling physical access to the network.Authentication Server: Centralized database server (e.g., RADIUS/Cisco ISE) that validates user credentials.25. Wi-Fi Technology FundamentalsWireless local area networking (WLAN) based on IEEE 802.11 standards.Wireless Frequencies2.4 GHz Band: Longer range, better wall penetration, but high congestion (Channels 1, 6, and 11 are non-overlapping).5 GHz Band: Higher throughput, shorter range, larger non-overlapping channel availability.Architecture ComponentsAutonomous AP: Standalone access point managing its own security and radio policies.Lightweight AP (LAP) & WLC: LAPs offload management processing to a centralized Wireless LAN Controller (WLC) via CAPWAP tunnels.26. Virtual Private Network (VPN) ConceptsVPN technology creates encrypted communication channels (tunnels) across public networks such as the Internet.Security ObjectivesConfidentiality: Encrypts data payload (AES, 3DES).Data Integrity: Ensures packet payload remains unaltered in transit (HMAC, SHA).Authentication: Verifies endpoint identities (Pre-Shared Keys, Digital Certificates).Anti-Replay: Uses packet sequence tracking to block intercepted data retransmissions.Implementation MethodsSite-to-Site VPN: Connects static branch offices over IPsec tunnels.Remote Access VPN: Connects individual mobile users using software clients (e.g., Cisco AnyConnect over SSL/IPsec).GRE over IPsec: Wraps multiprotocol or multicast traffic (like routing updates) in a Generic Routing Encapsulation (GRE) header before passing through an IPsec tunnel.27. Syslog Logging SystemSyslog is a standard protocol (UDP port 514) used to send log messages to a centralized monitoring server.Severity Levels (0 - 7)Memory mnemonic: "Every Alert System Can Always Give Increased Debugging" Level  Severity       Description
+
+22. Spanning Tree Protocol (STP)IEEE 802.1D Spanning Tree Protocol eliminates Layer 2 switching loops in redundant topologies by blocking redundant paths.STP Port Roles and StatesBridge Protocol Data Units (BPDUs): Control frames exchanged to elect the Root Bridge (lowest Bridge ID = Priority + MAC Address).Port Roles: Root Port (RP), Designated Port (DP), Alternate/Blocked Port (AP).Port States: Blocking $\rightarrow$ Listening $\rightarrow$ Learning $\rightarrow$ Forwarding.PortFast EnhancementConfigured on edge access ports to bypass listening/learning states and immediately transition ports to forwarding, preventing DHCP timeouts on connected hosts.23. AAA Server (Authentication, Authorization, Accounting)AAA provides a centralized framework for securing network access control across infrastructure devices:
+
+[ User/Admin ] <---> [ Network Access Device (NAD) ] <---> [ AAA Server (ISE/RADIUS) ]
+
+Authentication: Verifies user identity credentials ("Who are you?").
+
+Authorization: Defines permitted commands and execution privileges ("What are you allowed to do?").
+
+Accounting: Logs user sessions, commands, and activity duration ("What did you do and when?").
+
+Protocols: TACACS+ (Cisco proprietary, encrypts full packet payload, TCP port 49) vs. RADIUS (Open standard, encrypts password only, UDP ports 1812/1813).
+
+24. IEEE 802.1X (Dot1x) Port-Based Authentication
+IEEE 802.1X is a network access control protocol that prevents unauthorized devices from accessing a LAN until authentication is completed.
+
+Key Roles
+Supplicant: The client endpoint requesting access (e.g., a PC running 802.1X software).
+
+Authenticator: The network device (Switch/WLC) controlling physical access to the network.
+
+Authentication Server: Centralized database server (e.g., RADIUS/Cisco ISE) that validates user credentials.
+
+25. Wi-Fi Technology Fundamentals
+Wireless local area networking (WLAN) based on IEEE 802.11 standards.
+
+Wireless Frequencies
+2.4 GHz Band: Longer range, better wall penetration, but high congestion (Channels 1, 6, and 11 are non-overlapping).
+
+5 GHz Band: Higher throughput, shorter range, larger non-overlapping channel availability.
+
+Architecture Components
+Autonomous AP: Standalone access point managing its own security and radio policies.
+
+Lightweight AP (LAP) & WLC: LAPs offload management processing to a centralized Wireless LAN Controller (WLC) via CAPWAP tunnels.
+
+26. Virtual Private Network (VPN) Concepts
+VPN technology creates encrypted communication channels (tunnels) across public networks such as the Internet.
+
+Security Objectives
+Confidentiality: Encrypts data payload (AES, 3DES).
+
+Data Integrity: Ensures packet payload remains unaltered in transit (HMAC, SHA).
+
+Authentication: Verifies endpoint identities (Pre-Shared Keys, Digital Certificates).
+
+Anti-Replay: Uses packet sequence tracking to block intercepted data retransmissions.
+
+Implementation Methods
+Site-to-Site VPN: Connects static branch offices over IPsec tunnels.
+
+Remote Access VPN: Connects individual mobile users using software clients (e.g., Cisco AnyConnect over SSL/IPsec).
+
+GRE over IPsec: Wraps multiprotocol or multicast traffic (like routing updates) in a Generic Routing Encapsulation (GRE) header before passing through an IPsec tunnel.
+
+27. Syslog Logging System
+Syslog is a standard protocol (UDP port 514) used to send log messages to a centralized monitoring server.
+
+Severity Levels (0 - 7)
+Memory mnemonic: "Every Alert System Can Always Give Increased Debugging"
+
 ------- ------------- ---------------------------------------
    0    Emergency     System is unusable
    1    Alert         Action must be taken immediately
