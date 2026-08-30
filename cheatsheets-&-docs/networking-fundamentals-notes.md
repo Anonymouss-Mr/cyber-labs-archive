@@ -1,6 +1,6 @@
 # CCNA 200-301 Topic Extraction and Study Guide
 
-This document presents a structured and comprehensive extraction of key networking topics sourced directly from the **CCNA 200-301 Course Notes (by Mahmoud Tarek)**.
+This document presents a structured and comprehensive extraction of key networking topics sourced directly from the **CCNA 200-301 Course Notes (by Ahmed Adel)**.
 
 ---
 
