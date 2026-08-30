@@ -387,7 +387,7 @@ Router(config-if)# ip access-group 10 in
 ! Extended ACL Example
 Router(config)# ip access-list extended BLOCK_HTTP
 Router(config-ext-nacl)# deny tcp 192.168.1.0 0.0.0.255 host 10.0.0.5 eq 80
-Router(config-ext-nacl)# permit ip any any
+Router(config-ext-nacl)# permit ip any any```
 
 ## 16. DHCPv4 and DHCPv6
 
