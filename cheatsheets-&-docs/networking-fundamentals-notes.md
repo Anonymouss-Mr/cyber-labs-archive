@@ -379,15 +379,16 @@ ACLs are sequential rule tables used by routers to permit or deny network traffi
 
 ### Implementation Commands
 ```text
-! Standard ACL Example
-Router(config)# access-list 10 permit 192.168.1.0 0.0.0.255
-Router(config)# interface g0/0/0
-Router(config-if)# ip access-group 10 in
+   ! Standard ACL Example
+   Router(config)# access-list 10 permit 192.168.1.0 0.0.0.255
+   Router(config)# interface g0/0/0
+   Router(config-if)# ip access-group 10 in
 
-! Extended ACL Example
-Router(config)# ip access-list extended BLOCK_HTTP
-Router(config-ext-nacl)# deny tcp 192.168.1.0 0.0.0.255 host 10.0.0.5 eq 80
-Router(config-ext-nacl)# permit ip any any```
+   ! Extended ACL Example
+   Router(config)# ip access-list extended BLOCK_HTTP
+   Router(config-ext-nacl)# deny tcp 192.168.1.0 0.0.0.255 host 10.0.0.5 eq 80
+   Router(config-ext-nacl)# permit ip any any
+```
 
 ## 16. DHCPv4 and DHCPv6
 
@@ -419,16 +420,16 @@ ACLs are sequential rule tables used by routers to permit or deny network traffi
 
 ### Implementation Commands
 ```text
-! Standard ACL Example
-Router(config)# access-list 10 permit 192.168.1.0 0.0.0.255
-Router(config)# interface g0/0/0
-Router(config-if)# ip access-group 10 in
+  ! Standard ACL Example
+  Router(config)# access-list 10 permit 192.168.1.0 0.0.0.255
+  Router(config)# interface g0/0/0
+  Router(config-if)# ip access-group 10 in
 
-! Extended ACL Example
-Router(config)# ip access-list extended BLOCK_HTTP
-Router(config-ext-nacl)# deny tcp 192.168.1.0 0.0.0.255 host 10.0.0.5 eq 80
-Router(config-ext-nacl)# permit ip any any
-
+  ! Extended ACL Example
+  Router(config)# ip access-list extended BLOCK_HTTP
+  Router(config-ext-nacl)# deny tcp 192.168.1.0 0.0.0.255 host 10.0.0.5 eq 80
+  Router(config-ext-nacl)# permit ip any any
+```
 18. Network Address Translation (NAT)
 NAT maps private, non-routable IP addresses to public IPs, helping conserve IPv4 space and securing internal topologies.
 
@@ -564,4 +565,5 @@ Memory mnemonic: "Every Alert System Can Always Give Increased Debugging"
 Basic ConfigurationPlaintextRouter(config)# logging host 192.168.1.100
 Router(config)# logging trap warning
 Router(config)# logging source-interface g0/0
+
 28. References Ahmed Adel. CCNA 200-301 Full Course Notes (V1).Cisco Systems, Inc. CCNA 200-301 Official Cert Guide, Volume 1 & Volume 2.
