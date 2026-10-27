@@ -12,6 +12,5 @@ Welcome to my central technical repository. This space serves as a consolidated 
 ├── 📁 security-labs/          # Traffic analysis, CTF writeups, and network topology labs
 ├── 📁 dev-projects/           # Custom Python automation scripts, C++ utilities, and tools
 ├── 📁 programing-languages-notes/
-│   ├── 📜 python-cheatsheet-ar.md # مرجع بايثون الشامل (باللغة العربية)
 │   └── 📜 python-cheatsheet-en.md # Comprehensive Python Cheat Sheet (English)
 └── 📜 README.md               # Repository documentation and navigation guide
